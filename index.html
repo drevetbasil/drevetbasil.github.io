@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basil Drevet — Graphiste freelance</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFAF8;--card:#FFF;--ink:#1A1815;--muted:#6B6B68;--accent:#2563EB;--border:#E5E3E0;}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:Inter,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:Fraunces,serif;font-weight:450;letter-spacing:-0.01em}
+h2{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.1;margin-bottom:2.5rem}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+
+header{position:sticky;top:0;z-index:50;background:rgba(250,250,248,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:18px 32px;max-width:1200px;margin:0 auto}
+.logo{font-family:Fraunces,serif;font-size:1.2rem;font-weight:600}
+nav ul{list-style:none;display:flex;gap:32px}
+.navlink{font-size:0.85rem;font-weight:500;color:var(--muted);position:relative;padding-bottom:4px}
+.navlink::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--accent);transition:width .3s}
+.navlink:hover{color:var(--ink)}
+.navlink:hover::after{width:100%}
+
+.hero{padding:140px 32px 110px;max-width:1200px;margin:0 auto;display:block}
+.hero h1{font-size:clamp(2.8rem,7vw,4.8rem);line-height:1.05;max-width:18ch;margin-bottom:20px}
+.hero-role{font-size:1rem;color:var(--muted);font-weight:500;margin-bottom:32px}
+.hero-intro{max-width:60ch;font-size:1.1rem;line-height:1.8;color:var(--muted);margin-bottom:60px}
+.highlight{border-bottom:1px solid var(--accent)}
+
+section{padding:100px 0}
+.section-head{margin-bottom:60px}
+
+.project{margin-bottom:80px}
+.project-meta{display:grid;grid-template-columns:1fr 1.5fr;gap:48px;align-items:start;margin-bottom:40px}
+.project-title{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:20px;line-height:1.15}
+.project-label{font-size:0.8rem;color:var(--accent);margin-bottom:14px;font-weight:600}
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:28px 32px}
+.spec{background:var(--card);padding:20px;border-radius:8px;border-left:3px solid var(--accent)}
+.spec-title{font-size:0.7rem;color:var(--accent);text-transform:uppercase;font-weight:600;margin-bottom:8px}
+.spec p{font-size:0.95rem;color:var(--muted);line-height:1.6}
+.spec.full{grid-column:1/-1}
+
+.plate-grid{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:30px;min-height:850px}
+.image-caption{font-size:0.9rem;color:white;position:absolute;bottom:0;left:0;right:0;padding:16px 12px;background:rgba(0,0,0,0.5);text-align:left;font-weight:500;margin:0;border:none;opacity:0;transition:opacity 0.3s ease}
+.plate-wrapper{position:relative;display:flex;flex-direction:column}
+.plate-wrapper:hover .image-caption{opacity:1}
+.plate{aspect-ratio:16/9;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1)}
+.plate:hover{transform:scale(1.08) rotateY(0.5deg);z-index:10;box-shadow:0 20px 40px rgba(0,0,0,0.15)}
+.plate.wide{aspect-ratio:16/9}
+.plate.tall{aspect-ratio:16/9}
+.plate img{width:100%;height:100%;object-fit:cover;display:block}
+.plate.loading{background:#f0ede8}
+
+.services{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:48px}
+.services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
+.service-card{background:var(--card);padding:48px;border-radius:12px;border:1px solid var(--border);transition:all .3s cubic-bezier(.34,1.56,.64,1)}
+.service-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(0,0,0,.08);border-color:var(--accent)}
+.service-num{font-size:2.8rem;font-weight:600;color:var(--accent);margin-bottom:20px}
+.service-card h3{font-size:1.4rem;margin-bottom:16px;font-weight:500}
+.service-card p{font-size:1rem;color:var(--muted);line-height:1.8}
+
+.pack-edition{background:var(--card);border-radius:12px;border:3px solid var(--accent);padding:48px;margin-top:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.pack-num{font-size:1.4rem;margin-bottom:16px;font-weight:500;color:var(--ink);text-align:left}
+.pack-edition h3{font-size:2.8rem;font-weight:600;color:var(--accent);margin-bottom:20px;text-align:left}
+.pack-edition > p:first-of-type{font-size:1rem;color:var(--muted);line-height:1.8;margin-bottom:16px}
+.pack-edition > p:last-of-type{font-size:0.95rem;color:var(--muted);line-height:1.7}
+.pack-edition ul{list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:8px;font-size:0.95rem}
+.pack-edition li{color:var(--muted)}
+.pack-edition li::before{content:"◉ ";margin-right:8px;color:var(--accent);font-weight:bold}
+.pack-image{border-radius:8px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden;background:white}
+.pack-image img{width:100%;height:100%;object-fit:contain;object-position:center}
+
+.about{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:48px;display:grid;grid-template-columns:0.7fr 1.5fr;gap:56px;align-items:start}
+.about-left h3{color:var(--accent);font-size:0.9rem;font-weight:600;margin-bottom:16px}
+.about-status{font-family:Fraunces,serif;font-size:1.6rem;font-style:italic;margin-bottom:32px;line-height:1.2}
+.about-photo{width:100%;aspect-ratio:1/1;background:white;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-top:24px;overflow:hidden;border-radius:8px}
+.about-photo img{width:100%;height:100%;object-fit:cover;object-position:center}
+.about-text p{font-size:1.05rem;color:var(--muted);margin-bottom:20px;line-height:1.8}
+.about-text p:first-child{color:var(--ink);font-weight:500;font-size:1.15rem}
+.about-stats{display:flex;gap:40px;margin-top:40px;padding-top:32px;border-top:1px solid var(--border)}
+.stat b{display:block;font-family:Fraunces,serif;font-size:2rem;font-weight:600;color:var(--accent)}
+.stat span{font-size:0.75rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;margin-top:4px}
+
+#contact{background:linear-gradient(135deg,#1A1815,#2B2723);color:white}
+.contact{display:grid;grid-template-columns:1.3fr 1fr;gap:64px;align-items:center}
+.contact-title{font-family:Fraunces,serif;font-size:clamp(2rem,5vw,3.2rem);line-height:1.2;margin-bottom:32px}
+.contact-link{display:inline-block;padding:14px 32px;background:var(--accent);color:white;border-radius:6px;font-weight:500;margin-top:24px;transition:all .3s}
+.contact-link:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(37,99,235,.3)}
+.contact-info{display:flex;flex-direction:column;gap:32px}
+.info-row{padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.1)}
+.info-row:last-child{border-bottom:none}
+.info-label{font-size:0.75rem;color:rgba(255,255,255,.6);text-transform:uppercase;font-weight:600}
+.info-row p{font-size:1.1rem;margin-top:8px}
+
+footer{padding:40px 32px;display:flex;justify-content:space-between;align-items:center;background:var(--bg);border-top:1px solid var(--border);font-size:0.8rem;color:var(--muted)}
+
+.lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:1000;align-items:center;justify-content:center;animation:fadeIn 0.3s ease}
+.lightbox.active{display:flex}
+.lightbox-content{position:relative;max-width:90vw;max-height:90vh;display:flex;align-items:center;justify-content:center;gap:20px}
+.lightbox img{width:100%;height:auto;border-radius:8px;box-shadow:0 10px 50px rgba(0,0,0,0.5);max-width:70vw}
+.lightbox-close{position:absolute;top:20px;right:20px;color:white;font-size:36px;cursor:pointer;background:rgba(0,0,0,0.6);padding:10px 18px;border-radius:4px;border:none;font-weight:bold;transition:all 0.3s}
+.lightbox-close:hover{background:rgba(0,0,0,0.9);transform:scale(1.1)}
+.lightbox-prev,.lightbox-next{color:white;font-size:48px;cursor:pointer;background:rgba(0,0,0,0.5);border:none;padding:15px 20px;border-radius:4px;transition:all 0.3s;font-weight:bold}
+.lightbox-prev:hover,.lightbox-next:hover{background:rgba(0,0,0,0.8);transform:scale(1.1)}
+.plate img{cursor:pointer;transition:all 0.3s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+@media(max-width:900px){
+nav ul{gap:20px}.project-meta{grid-template-columns:1fr;gap:24px}.specs{grid-template-columns:1fr}.about{grid-template-columns:1fr;padding:32px}.contact{grid-template-columns:1fr;gap:48px}.services-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){
+.wrap,.nav,header{padding-left:20px;padding-right:20px}.hero{padding:100px 20px 80px}nav ul{gap:12px}.plate-grid{grid-template-columns:1fr}.services-grid{grid-template-columns:1fr}.about-stats{flex-direction:column;gap:24px}footer{flex-direction:column;gap:16px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="#top" class="logo">Basil Drevet</a>
+    <nav>
+      <ul>
+        <li><a href="#projets" class="navlink">Projets</a></li>
+        <li><a href="#services" class="navlink">Services</a></li>
+        <li><a href="#apropos" class="navlink">À propos</a></li>
+        <li><a href="#contact" class="navlink">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<div class="hero">
+  <div class="hero-content">
+    <h1>Édition · Identité visuelle · Illustration · Motion design</h1>
+    <p class="hero-role"> <a style="color:#2563EB;">GRAPHISME MULTIMÉDIA & DIRECTION ARTISTIQUE</a></p>
+    <p class="hero-intro">Graphiste freelance depuis près de&nbsp;10 ans, j'interviens principalement sur des projets print et d'identité visuelle, avec une attention particulière portée à la clarté, à la cohérence et aux détails.<br><br><span class="highlight">Je crois qu'un bon design ne cherche pas seulement à séduire :</span> il raconte, structure et transmet. C'est pourquoi je privilégie une approche réfléchie, sensible et durable.<br><br><span class="highlight">Toutes mes créations sont imaginées et réalisées à la main, sans intelligence artificielle générative</span>. Je fais le choix d'un graphisme profondément humain, où les idées naissent <span class="highlight">de&nbsp;l'observation</span>, <span class="highlight">de&nbsp;l'échange</span> et <span class="highlight">de&nbsp;l'expérience</span>.</p>
+  </div>
+</div>
+
+<section id="projets">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Sélection de projets 2022/2026</h2>
+    </div>
+
+    <div class="project">
+      <div class="project-meta">
+        <div>
+          <span class="project-label">01 / 04</span>
+          <h3 class="project-title">Identité visuelle & logos</h3>
+        </div>
+        <div class="specs">
+          <div class="spec">
+            <div class="spec-title">Contexte</div>
+            <p>Refonte de l'identité graphique d'une structure existante, avec contraintes techniques fortes.</p>
+          </div>
+          <div class="spec">
+            <div class="spec-title">Approche</div>
+            <p>Simplification des formes, palette restreinte, hiérarchie claire des informations.</p>
+          </div>
+          <div class="spec full">
+            <div class="spec-title">Livrables</div>
+            <p>Logo · mini-charte · supports print · gabarits divers & guidelines</p>
+          </div>
+        </div>
+      </div>
+      <div class="plate-grid" style="--cols:2;">
+        <div class="plate-wrapper">
+          <div class="plate loading" data-src="LAYOUT_MAGMA_VO.png"><img></div>
+        </div>
+        <div class="plate-wrapper">
+          <div class="plate loading" data-src="LAYOUT_TIT_MOUSSE_VO.png"><img></div>
+        </div>
+        <div class="plate-wrapper">
+          <div class="plate loading" data-src="LAYOUT_VEHIPASS_VO.png"><img></div>
+        </div>
+        <div class="plate-wrapper">
+          <div class="plate loading" data-src="LAYOUT_BEYNOST_VO.png"><img></div>
+        </div>
+        <div class="plate-wrapper">
+          <div class="plate loading" data-src="LAYOUT_AUX_DEUX_OLIVIERS_VO.png"><img></div>
+        </div>
+        <div class="plate-wrapper">
+          <div class="plate loading" data-src="LAYOUT_EDF_CAP_SOLAIRE_2028_VO.png"><img></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-meta">
+        <div>
+          <span class="project-label">02 / 04</span>
+          <h3 class="project-title">Supports print — Documents éditoriaux</h3>
+        </div>
+        <div class="specs">
+          <div class="spec">
+            <div class="spec-title">Contexte</div>
+            <p>Création et mise en forme de documents multi-pages destinés à l'impression et au&nbsp;digital.</p>
+          </div>
+          <div class="spec">
+            <div class="spec-title">Approche</div>
+            <p>Travail sur la lisibilité, les rythmes de page et la cohérence globale.</p>
+          </div>
+          <div class="spec full">
+            <div class="spec-title">Livrables</div>
+            <p>Brochures · livrets · rapport annuel</p>
+          </div>
+        </div>
+      </div>
+      <div class="plate-grid" style="--cols:2;">
+        <div class="plate-wrapper">
+          <div class="plate tall loading" data-src="LAYOUT_WATTSENSE_VO.png"><img></div>
+        </div>
+        <div class="plate-wrapper">
+          <div class="plate tall loading" data-src="LAYOUT_CHSJSL_VO.png"><img></div>
+        </div>
+        <div class="plate-wrapper">
+          <div class="plate tall loading" data-src="LAYOUT_EDITION_HI_VO.png"><img></div>
+        </div>
+        <div class="plate-wrapper">
+          <div class="plate tall loading" data-src="LAYOUT_TDL_VO.png"><img></div>
+        </div>
+        <div class="plate-wrapper">
+          <div class="plate tall loading" data-src="LAYOUT_EDGL_VO.png"><img></div>
+        </div>
+        <div class="plate-wrapper">
+          <div class="plate tall loading" data-src="LAYOUT_EDITION_ATELIER_DU_PILAT_VO.png"><img></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-meta">
+        <div>
+          <span class="project-label">03 / 04</span>
+          <h3 class="project-title">Travaux d'illustrations</h3>
+        </div>
+        <div class="specs">
+          <div class="spec">
+            <div class="spec-title">Contexte</div>
+            <p>Besoin de visuels sur mesure pour renforcer l'identité d'une marque.</p>
+          </div>
+          <div class="spec">
+            <div class="spec-title">Approche</div>
+            <p>Illustrations simples, expressives et facilement déclinables.</p>
+          </div>
+          <div class="spec full">
+            <div class="spec-title">Livrables</div>
+            <p>Illustrations vectorielles et traditionnelles · pictogrammes</p>
+          </div>
+        </div>
+      </div>
+      <div class="plate-grid" style="--cols:2;">
+        <div class="plate-wrapper">
+          <div class="plate wide loading" data-src="LAYOUT_ILLUSTRATION_MOUSSE_VO.png"><img></div>
+        </div>
+        <div class="plate-wrapper">
+          <div class="plate wide loading" data-src="LAYOUT_ILLUSTRATION_ORSAC_VO.png"><img></div>
+        </div>
+        <div class="plate-wrapper">
+          <div class="plate wide loading" data-src="LAYOUT_ILLUSTRATION_MACHON_BONNET_COTTON_VO.png"><img></div>
+        </div>
+        <div class="plate-wrapper">
+          <div class="plate wide loading" data-src="LAYOUT_ILLUSTRATION_ALTERMONT_VO.png"><img></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-meta">
+        <div>
+          <span class="project-label">04 / 04</span>
+          <h3 class="project-title">Motion design</h3>
+        </div>
+        <div class="specs">
+          <div class="spec">
+            <div class="spec-title">Contexte</div>
+            <p>Animation courte et moyenne durée pour présentation.</p>
+          </div>
+          <div class="spec">
+            <div class="spec-title">Approche</div>
+            <p>Animations légères, pensées comme une extension naturelle du graphisme.</p>
+          </div>
+          <div class="spec full">
+            <div class="spec-title">Livrables</div>
+            <p>Boucles animées · micro-animations · petit films d'entreprise</p>
+          </div>
+        </div>
+      </div>
+      <div class="plate-grid" style="--cols:2;">
+        <div class="plate-wrapper">
+          <div class="plate loading" data-src="LOOP_5.gif"><img></div>
+        </div>
+        <div class="plate-wrapper">
+          <div class="plate loading" data-src="LOOP_6.gif"><img></div>
+        </div>
+        <div class="plate-wrapper">
+          <div class="plate loading" data-src="LOOP_4.gif"><img></div>
+        </div>
+        <div class="plate-wrapper">
+          <div class="plate loading" data-src="LOOP_2.gif"><img></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Services</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <h3>Identité visuelle &amp; logos</h3>
+        <p>Création d'identités visuelles cohérentes et mémorables, du logo aux guidelines complètes. Je travaille la simplification des formes et la clarté pour que votre marque soit immédiatement reconnaissable et déclinable sur tous les supports.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <h3>Design éditorial</h3>
+        <p>Mise en forme de documents print avec attention particulière aux rythmes de page, à la hiérarchie typographique et à la cohérence globale. De la brochure au rapport annuel, je conçois des documents qui se lisent et s'apprécient.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <h3>Illustration</h3>
+        <p>Illustrations vectorielles et traditionnelles, pictogrammes et visuels sur mesure pour renforcer l'identité d'une marque. Des créations simples, expressives et facilement déclinables sur tous vos supports de communication.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <h3>Motion design léger</h3>
+        <p>Animations courtes pour présentations et supports web, pensées comme une extension naturelle de votre graphisme. Boucles animées, micro-interactions et petits films d'entreprise pour donner vie à vos idées.</p>
+      </div>
+    </div>
+    <div class="pack-edition">
+      <div class="pack-image">
+        <img src="images/ILLU_LE_PETIT_TRUC_EN_PLUS.svg" alt="Pack Édition illustration">
+      </div>
+      <div>
+        <h3>Le petit truc en&nbsp;✦</h3>
+        <p>De la conception à la livraison, je vous accompagne à chaque étape de votre projet. Après une phase de briefing, je réalise votre support de communication avec le plus grand soin. Puis, en partenariat avec <a href="https://print-courtage.fr/" target="_blank" style="color:#2563EB;">Print Courtage</a>, spécialiste de l'impression et du suivi de fabrication, nous sélectionnons les solutions techniques les plus pertinentes afin de garantir un résultat à la hauteur de vos exigences.</p>
+        <p>Nous prenons ensuite en charge la coordination avec les imprimeurs, le contrôle de la fabrication, le conditionnement et la livraison de vos supports partout en France métropolitaine. Vous bénéficiez ainsi d'un accompagnement complet, d'un interlocuteur unique et de la sérénité d'un projet maîtrisé de bout en bout.</p>
+        <ul>
+          <li>Conception sur mesure</li>
+          <li>Partenaires imprimeurs sélectionnés</li>
+          <li>Supervision complète</li>
+          <li>Livraison France métropolitaine</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="apropos">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Compte la-dessus et bois de l'eau !</h2>
+    </div>
+    <div class="about">
+      <div class="about-left">
+        <h3>Statut</h3>
+        <div class="about-status">Artiste-auteur</div>
+        <div class="about-photo">
+          <img id="profileImg">
+        </div>
+      </div>
+      <div class="about-text">
+        <p>Si, comme moi, vous estimez que l'eau mérite mieux que de refroidir des méga-serveurs d'intelligence artificielle, et que vous recherchez un design porteur de sens, alors nous partageons probablement la même vision.</p>
+        <p>Ici, chaque création est imaginée, dessinée et réalisée par un humain. Pas parce que je suis un vieux réac', mais parce que je crois que les meilleures idées naissent de l'observation, de l'échange et de la réflexion. Je défends un graphisme où la sensibilité, l'intention et le savoir-faire occupent une place que l'automatisation ne peut remplacer.</p>
+        <div class="about-stats">
+          <div class="stat">
+            <b>10</b>
+            <span>Ans d'expérience</span>
+          </div>
+          <div class="stat">
+            <b>4</b>
+            <span>Domaines d'expertise</span>
+          </div>
+          <div class="stat">
+            <b>FR</b>
+            <span>Basé à Lyon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact">
+      <div>
+        <h2 class="contact-title">Parlons-en ! Devant un café ou une visio.</h2>
+        <p>Si mon profil vous intéresse, si vous cherchez un accompagnement graphique ou que vous vous interrogez sur votre direction artistique, je suis disponible pour en parler.</p>
+        <div style="display:flex;gap:16px;margin-top:24px;flex-wrap:wrap;">
+          <a href="mailto:drevetbasil@gmail.com" class="contact-link">drevetbasil@gmail.com →</a>
+          <a href="tel:+33646083184" class="contact-link">+33 6 46 08 31 84 →</a>
+        </div>
+      </div>
+      <div class="contact-info">
+        <div class="info-row">
+          <div class="info-label">Localisation</div>
+          <p>Installé prés de Lyon, je travaille principalement dans la région, mais je me déplace avec plaisir lorsque les projets le nécessitent.</p>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Statut</div>
+          <p>Artiste-auteur</p>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Disponibilité</div>
+          <p>Missions ponctuelles ou collaborations longues</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>© 2026 Basil Drevet</p>
+  <p>Graphiste freelance — Fait avec soin ❤️ — Lyon, France</p>
+</footer>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox">
+  <div class="lightbox-content">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <button class="lightbox-prev" onclick="prevImage()">❮</button>
+    <img id="lightbox-img" src="" alt="Image agrandie">
+    <button class="lightbox-next" onclick="nextImage()">❯</button>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Charger les images des projets
+  const plates = document.querySelectorAll('.plate[data-src]');
+  plates.forEach(plate => {
+    const img = plate.querySelector('img');
+    let src = plate.getAttribute('data-src');
+    img.src = './images/' + src;
+    img.onload = function() {
+      plate.classList.remove('loading');
+    };
+    img.onerror = function() {
+      // Si l'image ne se charge pas, essayer avec des underscores remplacés par des espaces
+      let altSrc = src.replace(/_/g, ' ');
+      if(altSrc !== src) {
+        img.src = './images/' + altSrc;
+        img.onerror = function() {
+          console.warn('Image non trouvée:', src, 'ou', altSrc);
+        };
+      } else {
+        console.warn('Image non trouvée:', src);
+      }
+    };
+  });
+
+  // Charger la photo de profil (en SVG maintenant)
+  const profileImg = document.getElementById('profileImg');
+  profileImg.src = './images/STUDIO_2_2.png';
+
+  // Lightbox - ajouter event listener sur les images
+  const allImages = document.querySelectorAll('.plate img');
+  window.lightboxImages = Array.from(allImages).map(img => img.src);
+  window.currentImageIndex = 0;
+  
+  allImages.forEach((img, index) => {
+    img.addEventListener('click', function() {
+      window.currentImageIndex = index;
+      openLightbox(this.src);
+    });
+  });
+
+  // Fermer la lightbox au clic sur le fond noir
+  document.getElementById('lightbox').addEventListener('click', function(e) {
+    if(e.target === this) {
+      closeLightbox();
+    }
+  });
+
+  // Fermer au clic sur Échap
+  document.addEventListener('keydown', function(e) {
+    if(e.key === 'Escape') {
+      closeLightbox();
+    }
+  });
+});
+
+// Fonctions Lightbox
+function openLightbox(src) {
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  lightboxImg.src = src;
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  const lightbox = document.getElementById('lightbox');
+  lightbox.classList.remove('active');
+  document.body.style.overflow = 'auto';
+}
+
+function nextImage() {
+  if(window.lightboxImages.length > 0) {
+    window.currentImageIndex = (window.currentImageIndex + 1) % window.lightboxImages.length;
+    const lightboxImg = document.getElementById('lightbox-img');
+    lightboxImg.src = window.lightboxImages[window.currentImageIndex];
+  }
+}
+
+function prevImage() {
+  if(window.lightboxImages.length > 0) {
+    window.currentImageIndex = (window.currentImageIndex - 1 + window.lightboxImages.length) % window.lightboxImages.length;
+    const lightboxImg = document.getElementById('lightbox-img');
+    lightboxImg.src = window.lightboxImages[window.currentImageIndex];
+  }
+}
+</script>
+
+</body>
+</html>
